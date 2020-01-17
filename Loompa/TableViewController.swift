@@ -116,8 +116,9 @@ class TableViewController: UITableViewController, UISearchDisplayDelegate, UISea
                                         newEntity.setValue(appId, forKey: "appId")
                                         
                                       
-                                        if self.artistList.count < 5  {
-                                            
+                                       
+                                        
+                                        if self.artistList.count == 5  {
                                             do {
                                                 try self.context.save()
                                                 
@@ -125,7 +126,7 @@ class TableViewController: UITableViewController, UISearchDisplayDelegate, UISea
                                             } catch {
                                                 print("Failed Saving")
                                             }
-                                        
+                                      
                                         }
                                         
                                         
