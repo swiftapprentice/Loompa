@@ -7,17 +7,104 @@
 //
 
 import UIKit
+import CoreData
 
 class TableViewController: UITableViewController {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var artistList = [Artist]()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchAndSaveData()
+        
+        fetchAndPopulateList()
+        
+        tableView.reloadData()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+   
+    func fetchAndSaveData() {
+        
+        if let url = URL(string: "http://assets.aloompa.com.s3.amazonaws.com/rappers/rappers.json") {
+                          // Begin URL session
+                          URLSession.shared.dataTask(with: url) { data, response, error in
+                              
+                              typealias JSONDictionary = [String:Any]
+                              
+                              do {
+                              
+                                  if let parsedData = try JSONSerialization.jsonObject(with: data!) as? JSONDictionary,
+                                      let artists = parsedData["artists"] as? [JSONDictionary] {
+                                      for artist in artists {
+                                        
+                                  
+                                        let name = artist["name"] as? String ?? "n/a"
+                                        let desc = artist["description"] as? String ?? "n/a"
+                                        let image = artist["image"] as? String ?? "n/a"
+                                        let id = artist["id"] as? String ?? "n/a"
+                                        let appId = artist["appId"] as? String ?? "n/a"
+                                        let entity = NSEntityDescription.entity(forEntityName: "Artist", in: self.context)
+                                        let newEntity = NSManagedObject(entity: entity!, insertInto: self.context)
+                                        
+                                        newEntity.setValue(name, forKey: "name")
+                                        newEntity.setValue(desc, forKey: "desc")
+                                        newEntity.setValue(image, forKey: "image")
+                                        newEntity.setValue(id, forKey: "id")
+                                        newEntity.setValue(appId, forKey: "appId")
+                                        
+                                        
+                                        do {
+                                            try self.context.save()
+                                            
+                                            print("saved")
+                                        } catch {
+                                            print("Failed Saving")
+                                        }
+                                        
+                                        
+                                       //   print("name: ", artist["name"] as? String ?? "n/a", ", profile: ", artist["description"] as? String ?? "n/a")
+                                    
+                                        
+                                        
+//                                       self.list.append(Artist(artistName: artist["name"] as? String ?? "n/a", imgURL: artist["image"] as? String ?? "n/a" , profileDesc: artist["description"] as? String ?? "n/a", artistID: artist["id"] as? String ?? "n/a", appID: artist["appId"] as? String ?? "n/a"))
+//                                       // sort artists by name
+//                                       self.list.sort(by: {$0.name < $1.name})
+//                                       self.names.append(artist["name"] as? String ?? "n/a")
+                                        
+                                        
+                                       
+                                      }
+                                  }
+                              } catch let error {
+                                  print(error)
+                              }
+                            
+                          }.resume()
+                      }
+               
+    }
+    
+    func fetchAndPopulateList() {
+        let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "Artist")
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            self.artistList = results as! [Artist]
+        } catch let err as NSError {
+            print(err.debugDescription)
+            print("Failed to fetch data")
+        }
     }
 
     // MARK: - Table view data source
@@ -33,16 +120,20 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return artistList.count
     }
 
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
          let cell = Bundle.main.loadNibNamed("MyCustomCell", owner: self, options: nil)?.first as! MyCustomCell
+        
+        let imageURL = URL(string: artistList[indexPath.item].image ?? "n/a")
+        let imageData = try! Data(contentsOf: imageURL!)
         // Configure the cell...
         
-        cell.artistNameLabel.text = "Kanye West"
+        cell.artistNameLabel.text = artistList[indexPath.item].name
+        cell.profileImage.image = UIImage(data: imageData)
 
         return cell
     }
