@@ -10,10 +10,26 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var artistDescription: UITextView!
+    
+    var imageURL = ""
+    var profile = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let url = URL(string: imageURL)
+        let imageData = try! Data(contentsOf: url!)
+
+        let image = UIImage(data: imageData)
 
         // Do any additional setup after loading the view.
+        
+        profileImage.image = image
+        artistDescription.text = profile
+        
     }
 
 

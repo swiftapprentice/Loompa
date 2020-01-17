@@ -9,22 +9,43 @@
 import UIKit
 import CoreData
 
-class TableViewController: UITableViewController {
+class TableViewController: UITableViewController, UISearchDisplayDelegate, UISearchBarDelegate {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var artistList = [Artist]()
     
     
+    var imageURL = ""
+    var profileDesc = ""
+    
+    var isSearching = false
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let searchBarView = Bundle.main.loadNibNamed("SearchBar", owner: self, options: nil)?.first as? SearchBarView {
+            
+            searchBarView.newSearchBar.delegate = self
+            searchBarView.newSearchBar.returnKeyType = UIReturnKeyType.done // tap click away from search
+            searchBarView.frame.size = CGSize(width: self.view.frame.width, height: 50)
+            
+            let textField = searchBarView.newSearchBar.searchTextField
+            textField.backgroundColor = UIColor.white
+            self.view.addSubview(searchBarView)
+        }
+        
+        
+       
         fetchAndSaveData()
         
         fetchAndPopulateList()
+       // print(artistList.count)
+        artistList.sort(by: {$0.name ?? "n/a" < $1.name ?? "n/a"})
         
-        tableView.reloadData()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -33,7 +54,37 @@ class TableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-   
+    // MARK: - Search bar delegate
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText != "" {
+            var predicate : NSPredicate = NSPredicate()
+            predicate = NSPredicate(format: "name contains[c] '\(searchText)'")
+            
+            let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "Artist")
+            fetchRequest.predicate = predicate
+            
+            do {
+                artistList = try context.fetch(fetchRequest) as! [Artist]
+            } catch {
+                print("Could not fetch search data")
+            }
+            
+        } else {
+            let fetchRequest  = NSFetchRequest<NSFetchRequestResult>(entityName: "Artist")
+            do {
+                artistList = try context.fetch(fetchRequest) as! [Artist]
+                artistList.sort(by: {$0.name ?? "n/a" < $1.name ?? "n/a"})
+            } catch {
+                print("could not reload data")
+            }
+        }
+        
+        tableView.reloadData()
+    }
+    
+ 
     func fetchAndSaveData() {
         
         if let url = URL(string: "http://assets.aloompa.com.s3.amazonaws.com/rappers/rappers.json") {
@@ -48,6 +99,7 @@ class TableViewController: UITableViewController {
                                       let artists = parsedData["artists"] as? [JSONDictionary] {
                                       for artist in artists {
                                         
+                                   
                                   
                                         let name = artist["name"] as? String ?? "n/a"
                                         let desc = artist["description"] as? String ?? "n/a"
@@ -63,13 +115,17 @@ class TableViewController: UITableViewController {
                                         newEntity.setValue(id, forKey: "id")
                                         newEntity.setValue(appId, forKey: "appId")
                                         
-                                        
-                                        do {
-                                            try self.context.save()
+                                      
+                                        if self.artistList.count < 5  {
                                             
-                                            print("saved")
-                                        } catch {
-                                            print("Failed Saving")
+                                            do {
+                                                try self.context.save()
+                                                
+                                                print("saved")
+                                            } catch {
+                                                print("Failed Saving")
+                                            }
+                                        
                                         }
                                         
                                         
@@ -105,6 +161,8 @@ class TableViewController: UITableViewController {
             print(err.debugDescription)
             print("Failed to fetch data")
         }
+        
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -136,6 +194,28 @@ class TableViewController: UITableViewController {
         cell.profileImage.image = UIImage(data: imageData)
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("tapped cell")
+        
+        // Fetch  and assign data for selected cell
+     
+
+        imageURL = artistList[indexPath.item].image ?? "n/a"
+        profileDesc = artistList[indexPath.item].desc ?? "n/a"
+        
+        let profileVC = ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        
+     
+        profileVC.imageURL = imageURL
+        profileVC.profile = profileDesc
+       
+        // Present screen with description of selected artist
+        
+        self.present(profileVC, animated: true, completion: nil)
+
+        
     }
   
 

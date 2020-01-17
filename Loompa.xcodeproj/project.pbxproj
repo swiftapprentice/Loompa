@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F84D1F2023D24EC6000AA66D /* SearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = F84D1F1F23D24EC6000AA66D /* SearchBar.xib */; };
+		F84D1F2423D250E8000AA66D /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84D1F2323D250E8000AA66D /* SearchBarView.swift */; };
 		F861FCC323D21E4C000B7002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861FCC223D21E4C000B7002 /* AppDelegate.swift */; };
 		F861FCC523D21E4C000B7002 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861FCC423D21E4C000B7002 /* SceneDelegate.swift */; };
 		F861FCCA23D21E4C000B7002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F861FCC823D21E4C000B7002 /* Main.storyboard */; };
@@ -16,13 +18,13 @@
 		F861FCDA23D21EFC000B7002 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861FCD923D21EFC000B7002 /* TableViewController.swift */; };
 		F861FCDD23D21F2C000B7002 /* MyCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861FCDB23D21F2C000B7002 /* MyCustomCell.swift */; };
 		F861FCDE23D21F2C000B7002 /* MyCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F861FCDC23D21F2C000B7002 /* MyCustomCell.xib */; };
-		F861FCE023D22194000B7002 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861FCDF23D22194000B7002 /* SearchBarView.swift */; };
-		F861FCE223D221FA000B7002 /* SearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F861FCE123D221FA000B7002 /* SearchBarView.xib */; };
 		F861FCE523D2222A000B7002 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861FCE323D2222A000B7002 /* ProfileViewController.swift */; };
 		F861FCE623D2222A000B7002 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F861FCE423D2222A000B7002 /* ProfileViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F84D1F1F23D24EC6000AA66D /* SearchBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchBar.xib; sourceTree = "<group>"; };
+		F84D1F2323D250E8000AA66D /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		F861FCBF23D21E4C000B7002 /* Loompa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loompa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F861FCC223D21E4C000B7002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F861FCC423D21E4C000B7002 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -34,8 +36,6 @@
 		F861FCD923D21EFC000B7002 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		F861FCDB23D21F2C000B7002 /* MyCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomCell.swift; sourceTree = "<group>"; };
 		F861FCDC23D21F2C000B7002 /* MyCustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCustomCell.xib; sourceTree = "<group>"; };
-		F861FCDF23D22194000B7002 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
-		F861FCE123D221FA000B7002 /* SearchBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchBarView.xib; sourceTree = "<group>"; };
 		F861FCE323D2222A000B7002 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F861FCE423D2222A000B7002 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,8 +75,6 @@
 				F861FCD923D21EFC000B7002 /* TableViewController.swift */,
 				F861FCDB23D21F2C000B7002 /* MyCustomCell.swift */,
 				F861FCDC23D21F2C000B7002 /* MyCustomCell.xib */,
-				F861FCDF23D22194000B7002 /* SearchBarView.swift */,
-				F861FCE123D221FA000B7002 /* SearchBarView.xib */,
 				F861FCE323D2222A000B7002 /* ProfileViewController.swift */,
 				F861FCE423D2222A000B7002 /* ProfileViewController.xib */,
 				F861FCC823D21E4C000B7002 /* Main.storyboard */,
@@ -84,6 +82,8 @@
 				F861FCD023D21E4C000B7002 /* LaunchScreen.storyboard */,
 				F861FCD323D21E4C000B7002 /* Info.plist */,
 				F861FCCB23D21E4C000B7002 /* Loompa.xcdatamodeld */,
+				F84D1F1F23D24EC6000AA66D /* SearchBar.xib */,
+				F84D1F2323D250E8000AA66D /* SearchBarView.swift */,
 			);
 			path = Loompa;
 			sourceTree = "<group>";
@@ -148,10 +148,10 @@
 			files = (
 				F861FCE623D2222A000B7002 /* ProfileViewController.xib in Resources */,
 				F861FCD223D21E4C000B7002 /* LaunchScreen.storyboard in Resources */,
-				F861FCE223D221FA000B7002 /* SearchBarView.xib in Resources */,
 				F861FCCF23D21E4C000B7002 /* Assets.xcassets in Resources */,
 				F861FCDE23D21F2C000B7002 /* MyCustomCell.xib in Resources */,
 				F861FCCA23D21E4C000B7002 /* Main.storyboard in Resources */,
+				F84D1F2023D24EC6000AA66D /* SearchBar.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,9 +165,9 @@
 				F861FCC323D21E4C000B7002 /* AppDelegate.swift in Sources */,
 				F861FCDD23D21F2C000B7002 /* MyCustomCell.swift in Sources */,
 				F861FCC523D21E4C000B7002 /* SceneDelegate.swift in Sources */,
+				F84D1F2423D250E8000AA66D /* SearchBarView.swift in Sources */,
 				F861FCCD23D21E4C000B7002 /* Loompa.xcdatamodeld in Sources */,
 				F861FCE523D2222A000B7002 /* ProfileViewController.swift in Sources */,
-				F861FCE023D22194000B7002 /* SearchBarView.swift in Sources */,
 				F861FCDA23D21EFC000B7002 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
